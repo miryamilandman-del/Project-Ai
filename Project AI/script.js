@@ -1,8 +1,15 @@
 const initialData = {
     users: [{ username: "אדמין", password: "123" }],
     recipes: [
-        { id: 1, title: "פסטה ברוטב עגבניות 🍝", ingredients: ["חבילת פסטה", "5 עגבניות", "3 שיני שום"], steps: ["מרתיחים מים עם מלח", "מבשלים את פסטה", "מכינים רוטב במחבת", "מערבבים יחד"] },
-        { id: 2, title: "פנקייק שוקולד מפנק 🥞", ingredients: ["כוס חלב", "ביצה אחת", "כוס קמח"], steps: ["מערבבים הכל", "מחממים מחבת", "מטגנים עד להופעת בועות", "הופכים"] }
+        { id: 1, title: "פסטה ברוטב עגבניות 🍝", ingredients: ["חבילת פסטה", "5 עגבניות", "3 שיני שום"], steps: ["מרתיחים מים עם מלח", "מבשלים את הפסטה", "מכינים רוטב במחבת", "מערבבים יחד"] },
+        { id: 2, title: "פנקייק שוקולד מפנק 🥞", ingredients: ["כוס חלב", "ביצה אחת", "כוס קמח"], steps: ["מערבבים הכל", "מחממים מחבת", "מטגנים עד להופעת בועות", "הופכים"] },
+        { id: 3, title: "שוקו חם עם מרשמלו ☕", ingredients: ["כוס חלב", "2 כפיות שוקולית", "מרשמלו"], steps: ["מחממים חלב", "מוסיפים שוקולית", "מפזרים מרשמלו מלמעלה"] },
+        { id: 4, title: "פיצה פיתה מהירה 🍕", ingredients: ["פיתה", "רסק עגבניות", "גבינה צהובה", "זיתים"], steps: ["מורחים רסק על הפיתה", "מפזרים גבינה וזיתים", "מכניסים לטוסטר או לתנור"] },
+        { id: 5, title: "סלט פירות צבעוני 🍇", ingredients: ["תפוח", "בננה", "ענבים", "מיץ תפוזים"], steps: ["חותכים את כל הפירות", "מערבבים בקערה", "מוסיפים מיץ תפוזים"] },
+        { id: 6, title: "צ'יפס בתנור 🍟", ingredients: ["3 תפוחי אדמה", "שמן זית", "מלח"], steps: ["חותכים לרצועות", "מתבלים בשמן ומלח", "אופים בתנור עד שזה קריספי"] },
+        { id: 7, title: "כדורי שוקולד קסומים 🍫", ingredients: ["חבילת ביסקוויטים", "קקאו", "חלב", "סוכר"], steps: ["מרסקים את הביסקוויטים", "מערבבים עם שאר המצרכים", "יוצרים כדורים ומצפים בקוקוס"] },
+        { id: 8, title: "חביתה עם גבינה 🍳", ingredients: ["2 ביצים", "גבינה בולגרית", "בצל ירוק"], steps: ["טורפים ביצים", "מוסיפים גבינה ובצל", "מטגנים במחבת משני הצדדים"] },
+        { id: 9, title: "טוסט גבינה נמתח 🥪", ingredients: ["2 פרוסות לחם", "גבינה צהובה", "קטשופ"], steps: ["מורחים קטשופ", "שמים גבינה", "סוגרים ומכניסים לטוסטר"] }
     ],
     settings: { theme: 'child', mode: 'dark', rate: 1, music: 'calm' }
 };
@@ -24,6 +31,7 @@ const applySettings = () => {
     localStorage.setItem('recipeAppData', JSON.stringify(appData));
 };
 
+// ניהול כניסה/הרשמה
 document.getElementById('register-show-btn').onclick = () => {
     document.getElementById('login-btns-container').style.display = 'none';
     document.getElementById('register-btns-container').style.display = 'block';
@@ -46,7 +54,7 @@ document.getElementById('register-btn').onclick = () => {
         }
         appData.users.push({ username: userIn, password: passIn });
         localStorage.setItem('recipeAppData', JSON.stringify(appData));
-        alert("נרשמת בהצלחה! תוכלי להיכנס כעת.");
+        alert("נרשמת בהצלחה!");
         document.getElementById('login-show-btn').click();
     }
 };
@@ -65,6 +73,7 @@ document.getElementById('login-btn').onclick = () => {
     }
 };
 
+// הוספת מתכון
 document.getElementById('open-add-screen-btn').onclick = () => showScreen('add-recipe-screen');
 
 document.getElementById('save-new-recipe-btn').onclick = () => {
@@ -79,15 +88,15 @@ document.getElementById('save-new-recipe-btn').onclick = () => {
     }
 };
 
+// הצגת המתכונים עם צבעים זוהרים
 const renderRecipes = () => {
     const container = document.getElementById('recipes-container');
     const searchTerm = document.getElementById('search-input').value.toLowerCase();
     container.innerHTML = "";
     
-    // סינון המתכונים והצגתם עם צבע זוהר משתנה
     const filtered = appData.recipes.filter(r => r.title.toLowerCase().includes(searchTerm));
     filtered.forEach((r, index) => {
-        const colorIndex = index % 5; // מחזורי של 5 צבעים
+        const colorIndex = index % 5; // מחזורי של 5 צבעים (glow-text-0 עד glow-text-4)
         const div = document.createElement('div');
         div.className = 'recipe-card';
         div.innerHTML = `
@@ -114,6 +123,7 @@ const openRecipe = (recipe) => {
     document.getElementById('start-speech-btn').onclick = () => speakAll(recipe);
 };
 
+// הקראה מוזיקה
 const speakAll = async (recipe) => {
     synth.cancel();
     if(appData.settings.music !== 'none') {
