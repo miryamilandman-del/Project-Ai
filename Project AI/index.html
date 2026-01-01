@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מערכת המתכונים החכמה</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-mode child-style">
+    <div id="background-animations"></div>
+
+    <main id="app-container">
+        <section id="login-screen" class="screen neon-border active-screen">
+            <div class="welcome-section">
+                <div class="main-emoji">👑</div>
+                <h1 id="auth-title" class="neon-title">ספר המתכונים הקסום</h1>
+            </div>
+            <div class="form-group">
+                <input type="text" id="username" placeholder="שם משתמש">
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" placeholder="סיסמה">
+            </div>
+            
+            <div id="login-btns-container">
+                <button id="login-btn" class="glow-btn-main">כניסה חגיגית ✨</button>
+                <button id="register-show-btn" class="glow-btn-alt" style="background: none; border: 1px solid #0ff; font-size: 0.9rem; padding: 10px;">עוד לא רשומה? הירשמי כאן</button>
+            </div>
+
+            <div id="register-btns-container" style="display: none;">
+                <button id="register-btn" class="glow-btn-main">הירשמי עכשיו 📝</button>
+                <button id="login-show-btn" class="glow-btn-alt" style="background: none; border: 1px solid #f0f; font-size: 0.9rem; padding: 10px;">כבר רשומה? חזרי לכניסה</button>
+            </div>
+
+            <p id="login-error" class="error-msg"></p>
+        </section>
+
+        <section id="recipe-list-screen" class="screen neon-border" style="display: none;">
+            <div class="header-flex" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <button onclick="showScreen('settings-screen')" class="gear-btn-huge">⚙️</button>
+                <h2 class="neon-text-pink">המתכונים שלי</h2>
+            </div>
+            <input type="text" id="search-input" class="search-bar" placeholder="🔍 חפשי מתכון..." oninput="renderRecipes()">
+            <button id="open-add-screen-btn" class="glow-btn-add">➕ הוספת מתכון חדש</button>
+            <div id="recipes-container" class="giant-cards-list"></div>
+        </section>
+
+        <section id="settings-screen" class="screen neon-border" style="display: none;">
+            <h2 class="neon-text-blue">⚙️ הגדרות אישיות</h2>
+            <div class="form-group">
+                <label>סגנון:</label>
+                <select id="user-style">
+                    <option value="child" selected>ילדה (צבעוני זורח)</option>
+                    <option value="adult">אמא (מכובד ויוקרתי)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>מצב תצוגה:</label>
+                <select id="theme-mode">
+                    <option value="dark" selected>לילה זורח 🌙</option>
+                    <option value="light">יום בהיר ☀️</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>מהירות קול:</label>
+                <select id="voice-speed">
+                    <option value="0.7">איטי מאוד</option>
+                    <option value="0.9">איטי</option>
+                    <option value="1" selected>רגיל</option>
+                    <option value="1.2">מהיר</option>
+                    <option value="1.5">מהיר מאוד</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>מוזיקת רקע:</label>
+                <select id="bg-music">
+                    <option value="calm" selected>מוזיקה רגועה 🎵</option>
+                    <option value="happy">מוזיקה שמחה 💃</option>
+                    <option value="none">ללא מוזיקה</option>
+                </select>
+            </div>
+            <button id="save-settings-btn" class="glow-btn-main">שמור שינויים</button>
+            <button class="glow-btn-back" onclick="showScreen('recipe-list-screen')">חזרה למתכונים</button>
+        </section>
+
+        <section id="add-recipe-screen" class="screen neon-border" style="display: none;">
+            <h2 class="neon-text-blue">📝 מתכון חדש</h2>
+            <input type="text" id="new-title" placeholder="שם המתכון (עם אימוג'י)">
+            <textarea id="new-ingredients" rows="4" placeholder="מצרכים (הפרידי בפסיק)"></textarea>
+            <textarea id="new-steps" rows="6" placeholder="שלבי הכנה (הפרידי בנקודה)"></textarea>
+            <button id="save-new-recipe-btn" class="glow-btn-main">שמור מתכון</button>
+            <button class="glow-btn-back" onclick="showScreen('recipe-list-screen')">ביטול</button>
+        </section>
+
+        <section id="recipe-detail-screen" class="screen neon-border" style="display: none;">
+            <button class="glow-btn-back-small" id="back-to-list-btn">🔙 חזרה</button>
+            <h2 id="recipe-title" class="neon-text-yellow"></h2>
+            <div class="recipe-content-box"></div>
+            <div class="audio-panel-styled">
+                <button id="start-speech-btn" class="audio-control play">▶ הקריאי לי</button>
+                <button id="pause-speech-btn" class="audio-control">⏸ עצור</button>
+                <button id="resume-speech-btn" class="audio-control">⏯ המשך</button>
+                <button id="stop-music-btn" class="audio-control stop">🔇 השתק מוזיקה</button>
+            </div>
+        </section>
+    </main>
+
+    <audio id="audio-calm" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+    <audio id="audio-happy" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>

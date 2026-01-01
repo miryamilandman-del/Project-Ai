@@ -1,0 +1,95 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { 
+    min-height: 100vh; display: flex; justify-content: center; align-items: center; 
+    overflow-x: hidden; background: #000; transition: 0.5s; font-family: sans-serif;
+}
+
+.screen { 
+    width: 95%; max-width: 600px; padding: 35px; 
+    border-radius: 40px; z-index: 10; text-align: center;
+    background: rgba(20, 20, 20, 0.95);
+    border: 5px solid #ff00ff;
+    box-shadow: 0 0 30px #ff00ff;
+}
+
+.gear-btn-huge { 
+    font-size: 4.5rem; background: none; border: none; cursor: pointer; 
+    filter: drop-shadow(0 0 10px #0ff); 
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.gear-btn-huge:hover { transform: scale(1.2) rotate(30deg); }
+
+.confetti {
+    position: fixed; width: 10px; height: 10px; z-index: -1;
+    border-radius: 2px; animation: confettiFall linear forwards;
+}
+@keyframes confettiFall {
+    0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+/* הגדרות טקסט צבעוני וזורח למתכונים */
+.card-info h3 { font-size: 1.8rem; margin-bottom: 5px; }
+.card-info p { color: white; }
+
+.glow-text-0 { color: #0ff; text-shadow: 0 0 10px #0ff, 0 0 20px #0ff; }
+.glow-text-1 { color: #f0f; text-shadow: 0 0 10px #f0f, 0 0 20px #f0f; }
+.glow-text-2 { color: #ff0; text-shadow: 0 0 10px #ff0, 0 0 20px #ff0; }
+.glow-text-3 { color: #0f0; text-shadow: 0 0 10px #0f0, 0 0 20px #0f0; }
+.glow-text-4 { color: #ff4d4d; text-shadow: 0 0 10px #ff4d4d, 0 0 20px #ff4d4d; }
+
+.recipe-inner { text-align: right; color: #ffffff; line-height: 1.6; margin-top: 20px; }
+.ing-list { margin-bottom: 25px; padding-right: 20px; color: #e0e0e0; font-size: 1.2rem; list-style: circle; }
+.steps-list p { margin-bottom: 15px; color: #ffffff; font-size: 1.1rem; display: flex; align-items: flex-start; }
+.steps-list span { 
+    background: #ff00ff; color: white; min-width: 25px; height: 25px; 
+    border-radius: 50%; display: flex; justify-content: center; align-items: center; 
+    margin-left: 10px; font-size: 0.8rem; flex-shrink: 0;
+}
+
+.neon-title { color: #fff; text-shadow: 0 0 15px #0ff, 0 0 30px #0ff; font-size: 2.5rem; margin: 20px 0; }
+.neon-text-pink { color: #f0f; text-shadow: 0 0 10px #f0f; margin-bottom: 10px; }
+.neon-text-blue { color: #0ff; text-shadow: 0 0 10px #0ff; }
+.neon-text-yellow { color: #ff0; text-shadow: 0 0 10px #ff0; margin-bottom: 20px; }
+
+.giant-cards-list { display: flex; flex-direction: column; gap: 25px; margin-top: 25px; }
+.recipe-card {
+    background: rgba(255, 255, 255, 0.05); border: 3px solid #0ff; border-radius: 30px;
+    padding: 40px; display: flex; align-items: center; gap: 30px;
+    cursor: pointer; transition: 0.4s; text-align: right;
+    box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
+}
+.recipe-card:hover { transform: scale(1.03); box-shadow: 0 0 40px #0ff; background: rgba(0, 255, 255, 0.1); }
+.card-emoji { font-size: 4rem; }
+
+.glow-btn-main, .glow-btn-alt, .glow-btn-add, .glow-btn-back, .glow-btn-back-small {
+    background: linear-gradient(45deg, #f0f, #0ff); color: white; border: none; padding: 18px 40px;
+    font-size: 1.3rem; border-radius: 50px; cursor: pointer; font-weight: bold; margin: 15px 5px; transition: 0.3s;
+    box-shadow: 0 0 20px #f0f;
+}
+.glow-btn-back { background: linear-gradient(45deg, #444, #888); box-shadow: 0 0 15px #888; width: 80%; margin: 20px auto; }
+.glow-btn-back-small { padding: 10px 20px; font-size: 1rem; float: right; }
+
+input, select, textarea { 
+    width: 100%; padding: 18px; margin: 12px 0; border-radius: 20px; 
+    border: 2px solid #555; background: #111; color: white; font-size: 1.1rem;
+}
+
+.audio-panel-styled { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 25px; }
+.audio-control {
+    padding: 15px; border-radius: 15px; border: none; font-weight: bold;
+    cursor: pointer; background: rgba(255,255,255,0.1); color: white;
+}
+.audio-control.play { background: #00ff00; color: #000; grid-column: span 2; font-size: 1.2rem; }
+.audio-control.stop { background: #ff4d4d; }
+
+.floating-emoji { position: fixed; bottom: -100px; z-index: -1; animation: floatUp linear infinite; opacity: 0.8; }
+@keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+    20% { opacity: 1; }
+    100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+}
+.main-emoji { font-size: 7rem; animation: bounce 2s infinite; }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-30px); } }
+.error-msg { color: #ff0000; font-weight: bold; display: none; margin-top: 10px; }
